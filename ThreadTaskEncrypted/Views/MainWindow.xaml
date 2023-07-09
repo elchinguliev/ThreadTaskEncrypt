@@ -1,0 +1,24 @@
+﻿<Window x:Class="ThreadTaskEncrypted.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThreadTaskEncrypted"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Canvas>
+
+        <TextBox FontSize="30" FontWeight="UltraBlack"  Text="{Binding WordTxtBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="270" Canvas.Left="36" Canvas.Top="29">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding EnterCommand}" CommandParameter="{Binding ElementName=txt_box}">
+                </KeyBinding>
+            </TextBox.InputBindings>
+        </TextBox>
+        <ListBox x:Name="wordsListBox" FontSize="30" FontWeight="UltraBlack" ItemsSource="{Binding WordsListBox,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="244" Width="338" Canvas.Left="36" Canvas.Top="130"/>
+        <ListBox  Name="wordsCryptedListBox" ItemsSource="{Binding WordsCryptedListBox}" Height="293" Width="371" Canvas.Left="419" Canvas.Top="29" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Command="{Binding PlayCommand}" Background="Red" FontSize="30" FontWeight="UltraBlack" Canvas.Left="419" Canvas.Top="340" HorizontalAlignment="Left" VerticalAlignment="Center">Play</Button>
+        <Button Command="{Binding PauseCommand}" Background="Red" FontSize="30" FontWeight="UltraBlack" Canvas.Left="514" Canvas.Top="340" HorizontalAlignment="Left" VerticalAlignment="Center">Pause</Button>
+        <Button Command="{Binding ResumeCommand}" Background="Red" FontSize="30" FontWeight="UltraBlack" Canvas.Left="632" Canvas.Top="340" HorizontalAlignment="Left" VerticalAlignment="Center">Resume</Button>
+        <Button Command="{Binding StopCommand}" Background="Red" FontSize="30" FontWeight="UltraBlack" Canvas.Left="779" Canvas.Top="340" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="-0.351,0.794">Stop</Button>
+    </Canvas>
+</Window>
