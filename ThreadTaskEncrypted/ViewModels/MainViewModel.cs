@@ -44,12 +44,7 @@ namespace ThreadTaskEncrypted.ViewModels
             set { wordsCryptedListBox = value; OnPropertyChanged(); }
 
         }
-        public string NewWord
-        {
-            get { return newWord; }
-            set { newWord = value; OnPropertyChanged(); }
-        }
-        private string newWord;
+
 
         [Obsolete]
         public MainViewModel()
