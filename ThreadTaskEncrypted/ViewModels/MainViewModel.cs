@@ -44,7 +44,8 @@ namespace ThreadTaskEncrypted.ViewModels
             set { wordsCryptedListBox = value; OnPropertyChanged(); }
 
         }
-
+        bool ThreadPlaying=false;
+        Thread encryptWordsThread = null;
 
         [Obsolete]
         public MainViewModel()
@@ -78,50 +79,45 @@ namespace ThreadTaskEncrypted.ViewModels
 
             });
 
-            PlayCommand=new RelayCommand((obj) =>
+            PlayCommand = new RelayCommand((p) =>
             {
-                Thread PlayedThread = new Thread(() =>
+                if (!ThreadPlaying)
                 {
-                    Thread thread = new Thread(() =>
+                    encryptWordsThread = new Thread(() =>
                     {
-                        ObservableCollection<string> list = new ObservableCollection<string>(wordsListBox);
-                        string deletedlist = string.Empty;
-                        foreach (var item in list)
+                        if (wordsListBox.Count == 0)
                         {
-                            deletedlist = item;
+                            MessageBox.Show("Add words!");
+                            return;
+                        }
 
-                            Thread threadRemove = new Thread(() =>
+                        while (wordsListBox.Count != 0)
+                        {
+                            Thread.Sleep(700);
+                            if (wordsListBox != null && wordsListBox.Count > 0)
                             {
-                                App.Current.Dispatcher.Invoke((Action)delegate 
-                                {
-                                    wordsListBox.Remove(deletedlist);
-                                });
-                            });
+                                List<string> enc_words2 = wordsCryptedListBox.ToList();
+                                List<string> words2 = wordsListBox.ToList();
 
+                                string word = wordsListBox.Last();
+                                var enc_word = word.Encrypt("random");
 
-                            Thread threadAdd = new Thread(() =>
-                            {
-                                threadRemove.Join();
-                                App.Current.Dispatcher.Invoke((Action)delegate 
-                                {
-                                    WordsCryptedListBox.Add(Encrypted.getHashSha256(deletedlist));
-                                });
+                                enc_words2.Add(enc_word);
+                                words2.Remove(word);
 
-                            });
-
-                            threadRemove.Start();
-                            Thread.Sleep(2500);
-                            threadAdd.Start();
-                        };
+                                wordsListBox = new ObservableCollection<string>(words2);
+                                wordsCryptedListBox = new ObservableCollection<string>(enc_words2);
+                            }
+                        }
+                        MessageBox.Show("Words finished! Thread aborted!");
+                        ThreadPlaying = false;
                     });
-                    Thread.Start();
-                    if (wordsListBox.Count == 0)
-                    {
-                        Thread?.Abort();
-                    }
-                });
-                PlayedThread.Start();
+                    encryptWordsThread.IsBackground = true;
+                    ThreadPlaying = true;
+                    encryptWordsThread.Start();
+                }
             });
+
 
             StopCommand = new RelayCommand((obj) =>
             {
