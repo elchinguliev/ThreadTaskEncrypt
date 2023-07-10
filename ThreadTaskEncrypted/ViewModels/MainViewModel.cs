@@ -129,13 +129,13 @@ namespace ThreadTaskEncrypted.ViewModels
                 MessageBox.Show("Stoped");
             });
 
-            PauseCommand = new RelayCommand((o) =>
+            PauseCommand = new RelayCommand((obj) =>
             {
                 Thread.Suspend();
                 MessageBox.Show("Suspended");
             });
 
-            ResumeCommand = new RelayCommand((o) =>
+            ResumeCommand = new RelayCommand((obj) =>
             {
                 Thread.Resume();
                 MessageBox.Show("Resumed");
