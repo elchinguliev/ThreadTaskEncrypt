@@ -14,6 +14,7 @@ namespace ThreadTaskEncrypted.ViewModels
 {
     public class MainViewModel:BaseViewModel
     {
+        //new
         public RelayCommand PlayCommand { get; set; }
         public RelayCommand StopCommand { get; set; }
         public RelayCommand PauseCommand { get; set; }
